@@ -48,6 +48,10 @@ export default async function handler(req, res) {
     const userData = await userResponse.json();
 
     // Return success with token (Decap CMS expects this format)
+    // IMPORTANT: We need to properly escape the token for JavaScript
+    const token = tokenData.access_token;
+    const escapedToken = token.replace(/'/g, "\\'");
+
     const html = `
       <!DOCTYPE html>
       <html>
@@ -56,42 +60,67 @@ export default async function handler(req, res) {
       </head>
       <body>
         <script>
-          // Send token back to CMS
           (function() {
+            var token = '${escapedToken}';
             console.log('OAuth callback loaded');
-            console.log('Token received:', '${tokenData.access_token}');
+            console.log('Token received:', token);
             console.log('Window opener exists:', !!window.opener);
 
-            if (window.opener) {
-              // Try Decap CMS format (string)
-              const message = 'authorization:github:success:${tokenData.access_token}';
-              console.log('Sending message 1:', message);
-              window.opener.postMessage(message, window.location.origin);
+            if (!window.opener) {
+              console.error('No window.opener found!');
+              document.body.innerHTML = '<p>Error: This page must be opened from the CMS.</p>';
+              return;
+            }
 
-              // Also try wildcard origin as backup
+            // Send token using the Netlify/Decap CMS expected format
+            function sendAuthMessage() {
+              var message = 'authorization:github:success:' + token;
+              console.log('Sending auth message:', message);
+
+              // Try sending to opener origin
+              try {
+                window.opener.postMessage(message, window.opener.location.origin);
+                console.log('Message sent to opener origin');
+              } catch (e) {
+                console.error('Failed to send to opener origin:', e);
+              }
+
+              // Also try wildcard as fallback
               setTimeout(function() {
-                console.log('Sending message 2 with wildcard origin');
-                window.opener.postMessage(message, '*');
+                try {
+                  window.opener.postMessage(message, '*');
+                  console.log('Message sent with wildcard origin');
+                } catch (e) {
+                  console.error('Failed to send with wildcard:', e);
+                }
               }, 100);
 
-              // Try object format as final fallback (Decap CMS 3.x format)
+              // Try object format for newer Decap CMS
               setTimeout(function() {
-                const objMessage = {
-                  token: '${tokenData.access_token}',
-                  provider: 'github'
-                };
-                console.log('Sending message 3 (object - flat format):', objMessage);
-                window.opener.postMessage(objMessage, '*');
+                try {
+                  var objMessage = {
+                    token: token,
+                    provider: 'github'
+                  };
+                  window.opener.postMessage(objMessage, '*');
+                  console.log('Object format message sent');
+                } catch (e) {
+                  console.error('Failed to send object format:', e);
+                }
               }, 200);
 
-              console.log('All messages sent, closing in 2 seconds...');
-              setTimeout(function() { window.close(); }, 2000);
-            } else {
-              console.error('No window.opener found!');
+              // Close window after delay
+              setTimeout(function() {
+                console.log('Closing popup window');
+                window.close();
+              }, 1000);
             }
+
+            // Send the message immediately
+            sendAuthMessage();
           })();
         </script>
-        <p>Authorization successful! Check the console for details. This window will close automatically...</p>
+        <p>✓ Authorization successful! This window will close automatically...</p>
       </body>
       </html>
     `;
