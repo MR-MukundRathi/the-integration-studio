@@ -74,16 +74,13 @@ export default async function handler(req, res) {
                 window.opener.postMessage(message, '*');
               }, 100);
 
-              // Try object format as final fallback
+              // Try object format as final fallback (Decap CMS 3.x format)
               setTimeout(function() {
                 const objMessage = {
-                  type: 'authorization_success',
-                  payload: {
-                    token: '${tokenData.access_token}',
-                    provider: 'github'
-                  }
+                  token: '${tokenData.access_token}',
+                  provider: 'github'
                 };
-                console.log('Sending message 3 (object):', objMessage);
+                console.log('Sending message 3 (object - flat format):', objMessage);
                 window.opener.postMessage(objMessage, '*');
               }, 200);
 
