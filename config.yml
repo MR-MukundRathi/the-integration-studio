@@ -2,7 +2,7 @@
 
 backend:
   name: github
-  repo: katharinawitt1990-blip/the-integration-studio
+  repo: MR-MukundRathi/the-integration-studio
   branch: main
   base_url: https://the-integration-studio.vercel.app
   auth_endpoint: /api/auth
