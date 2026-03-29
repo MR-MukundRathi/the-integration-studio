@@ -1,17 +1,15 @@
 {
-  "version": 2,
   "installCommand": "npm install --production",
-  "routes": [
+  "buildCommand": "mkdir -p public && cp -r !(public|node_modules|.git|.vercel) public/ 2>/dev/null || rsync -av --exclude='public' --exclude='node_modules' --exclude='.git' --exclude='.vercel' . public/",
+  "outputDirectory": "public",
+  "rewrites": [
     {
-      "src": "/api/auth",
-      "dest": "/api/auth.js"
+      "source": "/api/auth",
+      "destination": "/api/auth.js"
     },
     {
-      "src": "/api/callback",
-      "dest": "/api/callback.js"
-    },
-    {
-      "handle": "filesystem"
+      "source": "/api/callback",
+      "destination": "/api/callback.js"
     }
   ],
   "headers": [
