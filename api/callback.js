@@ -57,14 +57,15 @@ export default async function handler(req, res) {
       <body>
         <script>
           // Send token back to CMS
-          window.opener.postMessage({
-            type: 'authorization_success',
-            payload: {
-              token: '${tokenData.access_token}',
-              provider: 'github'
+          (function() {
+            if (window.opener) {
+              window.opener.postMessage(
+                'authorization:github:success:${tokenData.access_token}',
+                '*'
+              );
             }
-          }, window.location.origin);
-          window.close();
+            window.close();
+          })();
         </script>
         <p>Authorization successful! This window will close automatically...</p>
       </body>
