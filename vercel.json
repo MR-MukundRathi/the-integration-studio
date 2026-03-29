@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --production",
-  "buildCommand": "mkdir -p public && find . -maxdepth 1 ! -name public ! -name node_modules ! -name .git ! -name .vercel ! -name . -exec cp -r {} public/ \\;",
+  "buildCommand": "mkdir -p public && find . -maxdepth 1 ! -name public ! -name node_modules ! -name .git ! -name .vercel ! -name api ! -name . -exec cp -r {} public/ \\;",
   "outputDirectory": "public",
   "rewrites": [
     {
