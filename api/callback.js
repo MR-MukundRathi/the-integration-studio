@@ -63,8 +63,18 @@ export default async function handler(req, res) {
                 'authorization:github:success:${tokenData.access_token}',
                 '*'
               );
+              // Also try the object format as fallback
+              setTimeout(function() {
+                window.opener.postMessage({
+                  type: 'authorization_success',
+                  payload: {
+                    token: '${tokenData.access_token}',
+                    provider: 'github'
+                  }
+                }, '*');
+              }, 100);
             }
-            window.close();
+            setTimeout(function() { window.close(); }, 500);
           })();
         </script>
         <p>Authorization successful! This window will close automatically...</p>
