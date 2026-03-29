@@ -4,6 +4,10 @@
   "outputDirectory": "public",
   "rewrites": [
     {
+      "source": "/api/auth/callback",
+      "destination": "/api/callback.js"
+    },
+    {
       "source": "/api/auth",
       "destination": "/api/auth.js"
     },
