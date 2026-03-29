@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>Content Manager - The Integration Studio</title>
+  <script>
+    // Debug: Log all postMessage events received
+    window.addEventListener('message', function(event) {
+      console.log('🔔 Message received in CMS window:', {
+        data: event.data,
+        origin: event.origin,
+        source: event.source ? 'popup' : 'unknown'
+      });
+    }, false);
+
+    console.log('✅ Message listener added to CMS window');
+  </script>
 </head>
 <body>
   <!-- Include the script that builds the page and powers Decap CMS -->
