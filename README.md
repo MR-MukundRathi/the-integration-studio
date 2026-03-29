@@ -340,5 +340,5 @@ https://github.com/[YOUR_USERNAME]/the-integration-studio/issues
 ---
 
 **Last Updated:** March 2024
-**Maintained by:** [Your Name]
+**Maintained by:** Katharina Witt
 **AI Assistant:** Claude Sonnet 4.5
