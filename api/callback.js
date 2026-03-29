@@ -58,26 +58,43 @@ export default async function handler(req, res) {
         <script>
           // Send token back to CMS
           (function() {
+            console.log('OAuth callback loaded');
+            console.log('Token received:', '${tokenData.access_token}');
+            console.log('Window opener exists:', !!window.opener);
+
             if (window.opener) {
-              window.opener.postMessage(
-                'authorization:github:success:${tokenData.access_token}',
-                '*'
-              );
-              // Also try the object format as fallback
+              // Try Decap CMS format (string)
+              const message = 'authorization:github:success:${tokenData.access_token}';
+              console.log('Sending message 1:', message);
+              window.opener.postMessage(message, window.location.origin);
+
+              // Also try wildcard origin as backup
               setTimeout(function() {
-                window.opener.postMessage({
+                console.log('Sending message 2 with wildcard origin');
+                window.opener.postMessage(message, '*');
+              }, 100);
+
+              // Try object format as final fallback
+              setTimeout(function() {
+                const objMessage = {
                   type: 'authorization_success',
                   payload: {
                     token: '${tokenData.access_token}',
                     provider: 'github'
                   }
-                }, '*');
-              }, 100);
+                };
+                console.log('Sending message 3 (object):', objMessage);
+                window.opener.postMessage(objMessage, '*');
+              }, 200);
+
+              console.log('All messages sent, closing in 2 seconds...');
+              setTimeout(function() { window.close(); }, 2000);
+            } else {
+              console.error('No window.opener found!');
             }
-            setTimeout(function() { window.close(); }, 500);
           })();
         </script>
-        <p>Authorization successful! This window will close automatically...</p>
+        <p>Authorization successful! Check the console for details. This window will close automatically...</p>
       </body>
       </html>
     `;
