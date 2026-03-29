@@ -4,7 +4,7 @@ backend:
   name: github
   repo: katharinawitt1990-blip/the-integration-studio
   branch: main
-  base_url: https://the-integration-studio-g8gxkaasd-mr-mukundrathis-projects.vercel.app
+  base_url: https://the-integration-studio.vercel.app
   auth_endpoint: /api/auth
 
 # When making changes, save as draft first
