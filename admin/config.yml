@@ -1,0 +1,137 @@
+# Decap CMS Configuration for The Integration Studio
+
+backend:
+  name: github
+  repo: katharinawitt1990-blip/the-integration-studio
+  branch: main
+  base_url: https://the-integration-studio-g8gxkaasd-mr-mukundrathis-projects.vercel.app
+  auth_endpoint: /api/auth
+
+# When making changes, save as draft first
+publish_mode: editorial_workflow
+
+# Where uploaded images go
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+# Define editable content
+collections:
+  # German Homepage
+  - name: "homepage_de"
+    label: "Homepage (Deutsch)"
+    files:
+      - file: "content/homepage-de.yml"
+        label: "Homepage DE"
+        name: "homepage_de"
+        fields:
+          - {label: "Hero Label", name: "hero_label", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Tagline", name: "hero_tagline", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - {label: "Intro Heading", name: "intro_heading", widget: "string"}
+          - {label: "Intro Paragraph 1", name: "intro_p1", widget: "text"}
+          - {label: "Intro Paragraph 2", name: "intro_p2", widget: "text"}
+
+  # English Homepage
+  - name: "homepage_en"
+    label: "Homepage (English)"
+    files:
+      - file: "content/homepage-en.yml"
+        label: "Homepage EN"
+        name: "homepage_en"
+        fields:
+          - {label: "Hero Label", name: "hero_label", widget: "string"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Tagline", name: "hero_tagline", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - {label: "Intro Heading", name: "intro_heading", widget: "string"}
+          - {label: "Intro Paragraph 1", name: "intro_p1", widget: "text"}
+          - {label: "Intro Paragraph 2", name: "intro_p2", widget: "text"}
+
+  # Organizations Page (DE)
+  - name: "organisationen_de"
+    label: "Für Organisationen (Deutsch)"
+    files:
+      - file: "content/organisationen-de.yml"
+        label: "Organisationen DE"
+        name: "organisationen_de"
+        fields:
+          - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Hero Heading", name: "hero_heading", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - {label: "Intro Text", name: "intro_text", widget: "text"}
+
+  # Organizations Page (EN)
+  - name: "organisationen_en"
+    label: "For Organizations (English)"
+    files:
+      - file: "content/organisationen-en.yml"
+        label: "Organizations EN"
+        name: "organisationen_en"
+        fields:
+          - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Hero Heading", name: "hero_heading", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - {label: "Intro Text", name: "intro_text", widget: "text"}
+
+  # Workshops Page (DE)
+  - name: "workshops_de"
+    label: "Workshops (Deutsch)"
+    files:
+      - file: "content/workshops-de.yml"
+        label: "Workshops DE"
+        name: "workshops_de"
+        fields:
+          - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Hero Heading", name: "hero_heading", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+
+  # Workshops Page (EN)
+  - name: "workshops_en"
+    label: "Workshops (English)"
+    files:
+      - file: "content/workshops-en.yml"
+        label: "Workshops EN"
+        name: "workshops_en"
+        fields:
+          - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Hero Heading", name: "hero_heading", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+
+  # About Page (DE)
+  - name: "about_de"
+    label: "Über uns (Deutsch)"
+    files:
+      - file: "content/about-de.yml"
+        label: "About DE"
+        name: "about_de"
+        fields:
+          - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Hero Heading", name: "hero_heading", widget: "string"}
+          - {label: "Intro Text", name: "intro_text", widget: "text"}
+
+  # About Page (EN)
+  - name: "about_en"
+    label: "About (English)"
+    files:
+      - file: "content/about-en.yml"
+        label: "About EN"
+        name: "about_en"
+        fields:
+          - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Hero Heading", name: "hero_heading", widget: "string"}
+          - {label: "Intro Text", name: "intro_text", widget: "text"}
+
+  # Settings
+  - name: "settings"
+    label: "Website Settings"
+    files:
+      - file: "content/settings.yml"
+        label: "Global Settings"
+        name: "settings"
+        fields:
+          - {label: "Site Title", name: "site_title", widget: "string"}
+          - {label: "Contact Email", name: "contact_email", widget: "string"}
+          - {label: "Phone", name: "phone", widget: "string", required: false}
+          - {label: "Social Media - Instagram", name: "instagram", widget: "string", required: false}
+          - {label: "Social Media - LinkedIn", name: "linkedin", widget: "string", required: false}
